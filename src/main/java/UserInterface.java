@@ -1,4 +1,6 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
+
 import Database.Database;
 import Superhero.Superhero;
 
@@ -11,7 +13,38 @@ public class UserInterface {
         this.scanner = scanner;
     }
 
-    public void displayMenu() {
+    public void start() {
+        System.out.println("Welcome to the Superhero Database!");
+
+        while (true) {
+            try {
+                displayMenu();
+                int choice = scanner.nextInt();
+
+                switch (choice) {
+                    case 1:
+                        createSuperhero();
+                        break;
+                    case 2:
+                        exitAndSave();
+                        return;
+                    case 3:
+                        searchSuperhero();
+                        break;
+                    case 4:
+                        listSuperheroes();
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please select a valid option.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a valid choice.");
+                scanner.nextLine(); // Consume the invalid input
+            }
+        }
+    }
+
+    private void displayMenu() {
         System.out.println("\nMenu:");
         System.out.println("1) Create a new superhero");
         System.out.println("2) Exit");
@@ -20,7 +53,7 @@ public class UserInterface {
         System.out.print("Please select an option: ");
     }
 
-    public void createSuperhero() {
+    private void createSuperhero() {
         // Collect superhero information from the user
         System.out.print("Enter superhero name: ");
         scanner.nextLine(); // Consume newline
@@ -50,44 +83,20 @@ public class UserInterface {
         database.saveSuperheroesToFile("superheroes.txt");
     }
 
-    public void exitAndSave() {
-        // Exit the program and save superheroes
+    private void exitAndSave() {
         System.out.println("Exiting the Superhero Database.");
         // Save superheroes to the text file before exiting
         database.saveSuperheroesToFile("superheroes.txt");
     }
 
-    public void searchSuperhero() {
-        // Search for a superhero by name
+    private void searchSuperhero() {
         System.out.print("Enter a superhero name (full or partial): ");
         scanner.nextLine(); // Consume newline
         String searchTerm = scanner.nextLine();
         database.searchAndDisplaySuperheroes(searchTerm);
     }
 
-    public void listSuperheroes() {
-        // Display a list of all superheroes
+    private void listSuperheroes() {
         database.listSuperheroes();
     }
-
-    public void runMainLoop() {
-        while (true) {
-            displayMenu();
-            int choice = scanner.nextInt();
-
-            if (choice == 1) {
-                createSuperhero();
-            } else if (choice == 2) {
-                exitAndSave();
-                break;
-            } else if (choice == 3) {
-                searchSuperhero();
-            } else if (choice == 4) {
-                listSuperheroes();
-            } else {
-                System.out.println("Invalid choice. Please select a valid option.");
-            }
-        }
-    }
 }
-
