@@ -13,9 +13,9 @@ public class Controller {
         this.database = database;
     }
     public Superhero[] getSuperheroesSortedByName() {
-        // Assuming Database has a method to get superheroes
+
         Superhero[] superheroes = database.getSuperheroes();
-        // Sort the superheroes by name
+
         Arrays.sort(superheroes, Comparator.comparing(Superhero::getName));
         return superheroes;
     }

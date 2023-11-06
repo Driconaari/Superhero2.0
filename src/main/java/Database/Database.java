@@ -12,14 +12,14 @@ public class Database {
     private boolean dataChanged;
 
     public Database(String filePath) {
-        this.filePath = filePath; // Initialize the file path
+        this.filePath = filePath;
         superheroes = new ArrayList<>();
-        loadSuperheroesFromFile(); // Load existing superheroes from the file
+        loadSuperheroesFromFile();
     }
 
     public void addSuperhero(Superhero superhero) {
         superheroes.add(superhero);
-        dataChanged = true;  // Set dataChanged to true when adding a superhero
+        dataChanged = true;
     }
 
 
@@ -35,7 +35,7 @@ public class Database {
             try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("superheroes.txt"))) {
                 objectOutputStream.writeObject(superheroes);
                 System.out.println("Superheroes saved to 'superheroes.txt'.");
-                dataChanged = false; // Reset the flag after saving
+                dataChanged = false;
             } catch (IOException e) {
                 System.out.println("Error saving superheroes to file: " + e.getMessage());
             }
@@ -50,7 +50,7 @@ public class Database {
             superheroes = (List<Superhero>) ois.readObject();
             System.out.println("Superheroes loaded from file: " + filePath);
         } catch (FileNotFoundException e) {
-            // Handle the case when the file doesn't exist yet (first-time run)
+
             System.out.println("No superheroes file found. Creating a new one.");
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error loading superheroes from file: " + e.getMessage());
@@ -67,30 +67,30 @@ public class Database {
     }
 
     public Superhero searchSuperheroByName(String name) {
-        // Iterate through your database and find the superhero with the matching name
+
         for (Superhero superhero : superheroes) {
             if (superhero.getName().equalsIgnoreCase(name)) {
                 return superhero;
             }
         }
-        return null; // Return null if no superhero with the given name is found
+        return null;
     }
 
     public Superhero[] getSuperheroes() {
-        // Convert the List to an array and return
+
         return superheroes.toArray(new Superhero[0]);
     }
 
     public void removeSuperhero(String superheroName) {
-        // Find the superhero in the list
+
         Superhero superheroToRemove = searchSuperheroByName(superheroName);
 
         if (superheroToRemove != null) {
-            // Remove the superhero from the list
+
             superheroes.remove(superheroToRemove);
             dataChanged=true;
 
-            // Update the text file with the new list
+
             saveSuperheroesToFile();
 
             System.out.println("Superhero removed: " + superheroName);
@@ -101,7 +101,7 @@ public class Database {
     }
 
     public void sortSuperheroesByAttributes(String primaryAttribute, String secondaryAttribute) {
-        // Validate the primary attribute before sorting
+
         if (!isValidAttribute(primaryAttribute)) {
             System.out.println("Invalid primary attribute. Please enter a valid attribute.");
             return;
@@ -109,7 +109,7 @@ public class Database {
 
         Comparator<Superhero> primaryComparator = getComparator(primaryAttribute);
 
-        // Sort the superheroes using the primary comparator
+
         superheroes.sort(primaryComparator);
 
         if (isValidAttribute(secondaryAttribute)) {
@@ -153,18 +153,18 @@ public class Database {
 
 
     private boolean isValidAttribute(String attribute) {
-        // Check if the attribute is null or empty
+
         if (attribute == null || attribute.isEmpty()) {
             return false;
         }
 
-        // Convert the attribute to lowercase for case-insensitive comparison
+
         String lowerCaseAttribute = attribute.toLowerCase();
 
-        // List of valid attributes for sorting
+
         List<String> validAttributes = Arrays.asList("name", "realname", "ishuman", "creationyear", "strength");
 
-        // Check if the provided attribute is in the list of valid attributes
+
         return validAttributes.contains(lowerCaseAttribute);
     }
 

@@ -46,7 +46,7 @@ public class UserInterface {
                         break;
                     case 6:
                         displayAvailableAttributes();
-                        scanner.nextLine(); // Consume the newline character
+                        scanner.nextLine();
                         System.out.print("Enter the primary attribute to sort by: ");
                         String primaryAttribute = scanner.nextLine();
                         System.out.print("Enter the secondary attribute to sort by (press Enter to skip): ");
@@ -65,7 +65,7 @@ public class UserInterface {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid choice.");
-                scanner.nextLine(); // Consume the invalid input
+                scanner.nextLine();
             }
         }
 
@@ -88,9 +88,9 @@ public class UserInterface {
 
 
     private void createSuperhero() {
-        // Collect superhero information from the user
+
         System.out.print("Enter superhero name: ");
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
         String name = scanner.nextLine();
 
         System.out.print("Enter real name: ");
@@ -103,10 +103,10 @@ public class UserInterface {
 
             if (isHumanInput.equalsIgnoreCase("true")) {
                 isHuman = true;
-                break; // Valid input, exit the loop
+                break;
             } else if (isHumanInput.equalsIgnoreCase("false")) {
                 isHuman = false;
-                break; // Valid input, exit the loop
+                break;
             } else {
                 System.out.println("Invalid input. Please enter 'true' or 'false'.");
             }
@@ -117,17 +117,16 @@ public class UserInterface {
         int creationYear = scanner.nextInt();
 
         System.out.print("Enter strength: ");
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
         String strength = scanner.nextLine();
 
-        // Create a Superhero object
         Superhero superhero = new Superhero(name, realName, isHuman, creationYear, strength);
 
-        // Add the superhero to the database
+
         database.addSuperhero(superhero);
         System.out.println("Superhero added to the database.");
 
-        // Save superheroes to the text file after adding a superhero
+
         database.saveSuperheroesToFile();
         System.out.println("Superheroes saved to 'superheroes.txt'.");
     }
@@ -145,7 +144,7 @@ public class UserInterface {
 
     private void searchSuperhero() {
         System.out.print("Enter a superhero name (full or partial): ");
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
         String searchTerm = scanner.nextLine();
         database.searchAndDisplaySuperheroes(searchTerm);
     }
@@ -156,16 +155,16 @@ public class UserInterface {
 
     private void editSuperhero() {
         System.out.print("Enter the name of the superhero you want to edit: ");
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
         String nameToEdit = scanner.nextLine();
 
-        // Search for the superhero by name
+
         Superhero superheroToEdit = database.searchSuperheroByName(nameToEdit);
 
         if (superheroToEdit != null) {
             System.out.println("Editing superhero: " + superheroToEdit.getName());
-            editSuperheroAttributes(superheroToEdit, scanner); // Call the editSuperheroAttributes method
-            database.saveSuperheroesToFile(); // Save the updated superhero to the text file
+            editSuperheroAttributes(superheroToEdit, scanner);
+            database.saveSuperheroesToFile();
             System.out.println("Superhero has been edited and saved.");
         } else {
             System.out.println("Superhero not found. Please enter a valid superhero name.");
@@ -222,10 +221,10 @@ public class UserInterface {
     }
     private void removeSuperhero() {
         System.out.print("Enter the name of the superhero you want to remove: ");
-        scanner.nextLine(); // Consume newline
+        scanner.nextLine();
         String nameToRemove = scanner.nextLine();
 
-        // Call the removeSuperhero method in the Database class
+
         database.removeSuperhero(nameToRemove);
     }
     private void displayAvailableAttributes() {
