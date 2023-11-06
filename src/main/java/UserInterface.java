@@ -213,12 +213,6 @@ public class UserInterface {
         }
     }
 
-    public void showSortedSuperheroesByName() {
-        // Call the sorting method before displaying superheroes
-        database.sortSuperheroesByName();
-        displaySuperheroes();
-    }
-
     private void displaySuperheroes() {
         System.out.println("Sorted Superheroes by Name:");
         for (Superhero superhero : database.getSuperheroes()) {
@@ -240,44 +234,6 @@ public class UserInterface {
 
         // Call the removeSuperhero method in the Database class
         database.removeSuperhero(nameToRemove);
-    }
-    private void viewSuperheroesSortedByAttribute() {
-        System.out.print("Enter the attribute to sort by (e.g., name, real name, isHuman, creationYear, strength): ");
-        scanner.nextLine(); // Consume newline
-        String attribute = scanner.nextLine().toLowerCase();
-
-        // Validate that the entered attribute is valid
-        if (isValidAttribute(attribute)) {
-            // Call the sorting method based on the user-specified attribute
-            database.sortSuperheroesByAttribute(attribute);
-            displaySuperheroes();
-        } else {
-            System.out.println("Invalid attribute. Please enter a valid attribute.");
-        }
-    }
-
-    private boolean isValidAttribute(String attribute) {
-        // List of valid attributes
-        String[] validAttributes = {"name", "real name", "ishuman", "creationyear", "strength"};
-
-        // Convert entered attribute to lowercase for case-insensitive comparison
-        String attributeLower = attribute.toLowerCase();
-
-        // Check if the entered attribute is in the list of valid attributes
-        for (String validAttr : validAttributes) {
-            if (attributeLower.equals(validAttr)) {
-                return true; // Valid attribute
-            }
-        }
-
-        return false; // Invalid attribute
-    }
-    private void sortSuperheroesByAttribute() {
-        System.out.print("Enter the attribute to sort by (name, real name, ishuman, creationyear, strength): ");
-        scanner.nextLine(); // Consume newline
-        String attribute = scanner.nextLine().toLowerCase();
-
-        controller.sortSuperheroesByAttribute(attribute);
     }
     private void displayAvailableAttributes() {
         System.out.println("Available attributes for sorting: ");
