@@ -213,13 +213,6 @@ public class UserInterface {
         }
     }
 
-    private void displaySuperheroes() {
-        System.out.println("Sorted Superheroes by Name:");
-        for (Superhero superhero : database.getSuperheroes()) {
-            System.out.println(superhero);
-        }
-    }
-
     private void viewSuperheroesSortedByName() {
         Superhero[] superheroes = controller.getSuperheroesSortedByName();
         System.out.println("\nSuperheroes sorted by name:");

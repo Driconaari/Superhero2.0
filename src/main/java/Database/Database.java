@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Database {
     private List<Superhero> superheroes;
-    private String filePath; // Add a field for the file path
+    private String filePath;
     private boolean dataChanged;
 
     public Database(String filePath) {
@@ -45,8 +45,6 @@ public class Database {
     }
 
 
-
-
     public void loadSuperheroesFromFile() {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             superheroes = (List<Superhero>) ois.readObject();
@@ -78,11 +76,6 @@ public class Database {
         return null; // Return null if no superhero with the given name is found
     }
 
-    public void sortSuperheroesByName() {
-        // Use Collections.sort with a custom comparator
-        Collections.sort(superheroes, Comparator.comparing(Superhero::getName));
-    }
-
     public Superhero[] getSuperheroes() {
         // Convert the List to an array and return
         return superheroes.toArray(new Superhero[0]);
@@ -95,11 +88,13 @@ public class Database {
         if (superheroToRemove != null) {
             // Remove the superhero from the list
             superheroes.remove(superheroToRemove);
+            dataChanged=true;
 
             // Update the text file with the new list
             saveSuperheroesToFile();
 
             System.out.println("Superhero removed: " + superheroName);
+
         } else {
             System.out.println("Superhero not found: " + superheroName);
         }
@@ -112,28 +107,21 @@ public class Database {
             return;
         }
 
-        // Define a comparator for the primary attribute
         Comparator<Superhero> primaryComparator = getComparator(primaryAttribute);
 
         // Sort the superheroes using the primary comparator
         superheroes.sort(primaryComparator);
 
-        // Check if a secondary attribute is provided
         if (isValidAttribute(secondaryAttribute)) {
-            // Define a comparator for the secondary attribute
             Comparator<Superhero> secondaryComparator = getComparator(secondaryAttribute);
 
-            // Sort the superheroes using the secondary comparator
             superheroes.sort(secondaryComparator.thenComparing(primaryComparator));
         }
 
-        // Display the sorted superheroes
         displaySuperheroes(superheroes);
     }
 
 
-
-    // Helper method to get a comparator for a given attribute
     private Comparator<Superhero> getComparator(String attribute) {
         switch (attribute.toLowerCase()) {
             case "name":
@@ -150,7 +138,6 @@ public class Database {
                 throw new IllegalArgumentException("Invalid attribute: " + attribute);
         }
     }
-
 
 
     private void displaySuperheroes(List<Superhero> superheroes) {
@@ -182,24 +169,5 @@ public class Database {
     }
 
 
-    public void sortSuperheroesByAttribute(String attribute) {
-        try {
-            // Validate the attribute before sorting
-            if (!isValidAttribute(attribute)) {
-                throw new IllegalArgumentException("Invalid attribute. Please enter a valid attribute.");
-            }
-
-            // Use a lambda expression to define a comparator based on the attribute
-            Comparator<Superhero> comparator = getComparator(attribute);
-
-            // Sort the superheroes using the chosen comparator
-            superheroes.sort(comparator);
-
-            // Display the sorted superheroes
-            displaySuperheroes(superheroes);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
-        }
-    }
 }
 

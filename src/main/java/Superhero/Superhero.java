@@ -46,9 +46,6 @@ public class Superhero implements Serializable {
         this.strength = newStrength;
     }
 
-
-
-
     public String getRealName() {
         return realName;
     }

@@ -20,9 +20,6 @@ public class Controller {
         return superheroes;
     }
 
-    public void sortSuperheroesByAttribute(String attribute) {
-        database.sortSuperheroesByAttribute(attribute);
-    }
 
 }
 
