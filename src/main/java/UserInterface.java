@@ -1,6 +1,7 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import Controller.Controller;
 import Database.Database;
 import Superhero.Superhero;
 
@@ -8,14 +9,19 @@ public class UserInterface {
     private Database database;
     private Scanner scanner;
 
+    private Controller controller;
+
+
     public UserInterface(Database database, Scanner scanner) {
         this.database = database;
+        this.controller = new Controller(database);
         this.scanner = scanner;
     }
 
 
     public void start() {
         System.out.println("Welcome to the Superhero Database!");
+
 
         while (true) {
             try {
@@ -39,6 +45,9 @@ public class UserInterface {
                         saveSuperheroes();
                         break;
                     case 6:
+                        viewSuperheroesSortedByName();
+                        break;
+                    case 7:
                         exitAndSave();
                         break;
                     default:
@@ -49,16 +58,19 @@ public class UserInterface {
                 scanner.nextLine(); // Consume the invalid input
             }
         }
+
     }
+
 
     private void displayMenu() {
         System.out.println("\nMenu:");
         System.out.println("1) Create a new superhero");
         System.out.println("2) Edit a superhero");
         System.out.println("3) Search for a superhero");
-        System.out.println("4) listSuperheroes");
-        System.out.println("5) saveSuperheroes");
-        System.out.println("6) Exit with save");
+        System.out.println("4) List superheroes");
+        System.out.println("5) Save superheroes");
+        System.out.println("6) View superheroes sorted by name"); // New option
+        System.out.println("7) Exit with save");
         System.out.print("Please select an option: ");
     }
 
@@ -194,6 +206,26 @@ public class UserInterface {
             superhero.setStrength(newStrength);
         }
     }
-}
 
+    public void showSortedSuperheroesByName() {
+        // Call the sorting method before displaying superheroes
+        database.sortSuperheroesByName();
+        displaySuperheroes();
+    }
+
+    private void displaySuperheroes() {
+        System.out.println("Sorted Superheroes by Name:");
+        for (Superhero superhero : database.getSuperheroes()) {
+            System.out.println(superhero);
+        }
+    }
+
+    private void viewSuperheroesSortedByName() {
+        Superhero[] superheroes = controller.getSuperheroesSortedByName();
+        System.out.println("\nSuperheroes sorted by name:");
+        for (Superhero superhero : superheroes) {
+            System.out.println(superhero);
+        }
+    }
+}
 

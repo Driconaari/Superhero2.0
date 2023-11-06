@@ -4,6 +4,8 @@ import Superhero.Superhero;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class Database {
@@ -65,5 +67,15 @@ public class Database {
             }
         }
         return null; // Return null if no superhero with the given name is found
+    }
+
+    public void sortSuperheroesByName() {
+        // Use Collections.sort with a custom comparator
+        Collections.sort(superheroes, Comparator.comparing(Superhero::getName));
+    }
+
+    public Superhero[] getSuperheroes() {
+        // Convert the List to an array and return
+        return superheroes.toArray(new Superhero[0]);
     }
 }
