@@ -47,4 +47,21 @@ public class Superhero implements Serializable {
     }
 
 
+
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public int getCreationYear() {
+        return creationYear;
+    }
+
+    public String getStrength() {
+        return strength;
+    }
+
+    public boolean isHuman() {
+        return isHuman;
+    }
 }

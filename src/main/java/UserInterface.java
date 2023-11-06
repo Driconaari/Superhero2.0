@@ -42,19 +42,26 @@ public class UserInterface {
                         listSuperheroes();
                         break;
                     case 5:
-                        saveSuperheroes();
-                        break;
-                    case 6:
                         viewSuperheroesSortedByName();
                         break;
-                    case 7:
-                        exitAndSave();
-                        break;
-                    case 8:
-                        removeSuperhero();
+                    case 6:
+                        displayAvailableAttributes();
+                        scanner.nextLine(); // Consume the newline character
+                        System.out.print("Enter the primary attribute to sort by: ");
+                        String primaryAttribute = scanner.nextLine();
+                        System.out.print("Enter the secondary attribute to sort by (press Enter to skip): ");
+                        String secondaryAttribute = scanner.nextLine();
+                        database.sortSuperheroesByAttributes(primaryAttribute, secondaryAttribute);
                         break;
                     default:
                         System.out.println("Invalid choice. Please select a valid option.");
+                        break;
+                    case 7:
+                        removeSuperhero();
+                        break;
+                    case 8:
+                        exitAndSave();
+                        break;
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter a valid choice.");
@@ -71,12 +78,13 @@ public class UserInterface {
         System.out.println("2) Edit a superhero");
         System.out.println("3) Search for a superhero");
         System.out.println("4) List superheroes");
-        System.out.println("5) Save superheroes");
-        System.out.println("6) View superheroes sorted by name"); // New option
-        System.out.println("7) Exit with save");
-        System.out.println("8) Remove a superhero");
+        System.out.println("5) View superheroes sorted by name");
+        System.out.println("6) Sort superheroes by attribute");
+        System.out.println("7) Remove a superhero");
+        System.out.println("8) Exit with save");
         System.out.print("Please select an option: ");
     }
+
 
 
     private void createSuperhero() {
@@ -130,7 +138,9 @@ public class UserInterface {
         // Save superheroes to the text file before exiting
         database.saveSuperheroesToFile();
         System.out.println("Superheroes saved to superheroes.txt.");
-    }
+            System.exit(0);
+        }
+
 
 
     private void searchSuperhero() {
@@ -142,14 +152,6 @@ public class UserInterface {
 
     private void listSuperheroes() {
         database.listSuperheroes();
-    }
-
-    private void saveSuperheroes() {
-        System.out.print("Enter the filename to save the superheroes: ");
-        scanner.nextLine(); // Consume newline
-        String filename = scanner.nextLine();
-        database.saveSuperheroesToFile();
-        System.out.println("Superheroes saved to '" + filename + "'.");
     }
 
     private void editSuperhero() {
@@ -239,6 +241,51 @@ public class UserInterface {
         // Call the removeSuperhero method in the Database class
         database.removeSuperhero(nameToRemove);
     }
+    private void viewSuperheroesSortedByAttribute() {
+        System.out.print("Enter the attribute to sort by (e.g., name, real name, isHuman, creationYear, strength): ");
+        scanner.nextLine(); // Consume newline
+        String attribute = scanner.nextLine().toLowerCase();
 
+        // Validate that the entered attribute is valid
+        if (isValidAttribute(attribute)) {
+            // Call the sorting method based on the user-specified attribute
+            database.sortSuperheroesByAttribute(attribute);
+            displaySuperheroes();
+        } else {
+            System.out.println("Invalid attribute. Please enter a valid attribute.");
+        }
+    }
+
+    private boolean isValidAttribute(String attribute) {
+        // List of valid attributes
+        String[] validAttributes = {"name", "real name", "ishuman", "creationyear", "strength"};
+
+        // Convert entered attribute to lowercase for case-insensitive comparison
+        String attributeLower = attribute.toLowerCase();
+
+        // Check if the entered attribute is in the list of valid attributes
+        for (String validAttr : validAttributes) {
+            if (attributeLower.equals(validAttr)) {
+                return true; // Valid attribute
+            }
+        }
+
+        return false; // Invalid attribute
+    }
+    private void sortSuperheroesByAttribute() {
+        System.out.print("Enter the attribute to sort by (name, real name, ishuman, creationyear, strength): ");
+        scanner.nextLine(); // Consume newline
+        String attribute = scanner.nextLine().toLowerCase();
+
+        controller.sortSuperheroesByAttribute(attribute);
+    }
+    private void displayAvailableAttributes() {
+        System.out.println("Available attributes for sorting: ");
+        System.out.println("1) Name");
+        System.out.println("2) RealName");
+        System.out.println("3) IsHuman");
+        System.out.println("4) CreationYear");
+        System.out.println("5) Strength");
+    }
 }
 
