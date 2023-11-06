@@ -1,10 +1,10 @@
 package Database;
 
 import Superhero.Superhero;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.io.IOException;
 
 public class Database {
     private List<Superhero> superheroes;
@@ -13,7 +13,7 @@ public class Database {
     public Database(String filePath) {
         this.filePath = filePath; // Initialize the file path
         superheroes = new ArrayList<>();
-        loadSuperheroesFromFile();
+        loadSuperheroesFromFile(); // Load existing superheroes from the file
     }
 
     public void addSuperhero(Superhero superhero) {
@@ -40,6 +40,9 @@ public class Database {
         try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(filePath))) {
             superheroes = (List<Superhero>) ois.readObject();
             System.out.println("Superheroes loaded from file: " + filePath);
+        } catch (FileNotFoundException e) {
+            // Handle the case when the file doesn't exist yet (first-time run)
+            System.out.println("No superheroes file found. Creating a new one.");
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error loading superheroes from file: " + e.getMessage());
         }
@@ -52,5 +55,15 @@ public class Database {
                 System.out.println(superhero);
             }
         }
+    }
+
+    public Superhero searchSuperheroByName(String name) {
+        // Iterate through your database and find the superhero with the matching name
+        for (Superhero superhero : superheroes) {
+            if (superhero.getName().equalsIgnoreCase(name)) {
+                return superhero;
+            }
+        }
+        return null; // Return null if no superhero with the given name is found
     }
 }

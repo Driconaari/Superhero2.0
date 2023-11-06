@@ -1,11 +1,8 @@
 package Superhero;
 
-import java.io.Serializable;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
+import java.io.*;
 public class Superhero implements Serializable {
+    private static final long serialVersionUID = 123456789L;
     private String name;
     private String realName;
     private boolean isHuman;
@@ -29,27 +26,25 @@ public class Superhero implements Serializable {
         return name;
     }
 
-    public String getRealName() {
-        return realName;
+    public void setName(String newName) {
+        this.name = newName;
     }
 
-    public boolean isHuman() {
-        return isHuman;
+    public void setRealName(String newRealName) {
+        this.realName = newRealName;
     }
 
-    public int getCreationYear() {
-        return creationYear;
+    public void setHuman(boolean newIsHuman) {
+        this.isHuman = newIsHuman;
     }
 
-    public String getStrength() {
-        return strength;
+    public void setCreationYear(int newCreationYear) {
+        this.creationYear = newCreationYear;
     }
 
-    private void writeObject(ObjectOutputStream out) throws IOException {
-        out.defaultWriteObject(); // Use the default serialization for other fields
+    public void setStrength(String newStrength) {
+        this.strength = newStrength;
     }
 
-    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        in.defaultReadObject(); // Use the default deserialization for other fields
-    }
+
 }
