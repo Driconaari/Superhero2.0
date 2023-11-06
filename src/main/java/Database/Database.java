@@ -78,4 +78,21 @@ public class Database {
         // Convert the List to an array and return
         return superheroes.toArray(new Superhero[0]);
     }
+
+    public void removeSuperhero(String superheroName) {
+        // Find the superhero in the list
+        Superhero superheroToRemove = searchSuperheroByName(superheroName);
+
+        if (superheroToRemove != null) {
+            // Remove the superhero from the list
+            superheroes.remove(superheroToRemove);
+
+            // Update the text file with the new list
+            saveSuperheroesToFile();
+
+            System.out.println("Superhero removed: " + superheroName);
+        } else {
+            System.out.println("Superhero not found: " + superheroName);
+        }
+    }
 }

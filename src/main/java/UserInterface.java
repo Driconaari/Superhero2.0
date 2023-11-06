@@ -50,6 +50,9 @@ public class UserInterface {
                     case 7:
                         exitAndSave();
                         break;
+                    case 8:
+                        removeSuperhero();
+                        break;
                     default:
                         System.out.println("Invalid choice. Please select a valid option.");
                 }
@@ -71,6 +74,7 @@ public class UserInterface {
         System.out.println("5) Save superheroes");
         System.out.println("6) View superheroes sorted by name"); // New option
         System.out.println("7) Exit with save");
+        System.out.println("8) Remove a superhero");
         System.out.print("Please select an option: ");
     }
 
@@ -227,5 +231,14 @@ public class UserInterface {
             System.out.println(superhero);
         }
     }
+    private void removeSuperhero() {
+        System.out.print("Enter the name of the superhero you want to remove: ");
+        scanner.nextLine(); // Consume newline
+        String nameToRemove = scanner.nextLine();
+
+        // Call the removeSuperhero method in the Database class
+        database.removeSuperhero(nameToRemove);
+    }
+
 }
 
