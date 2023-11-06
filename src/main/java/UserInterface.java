@@ -1,6 +1,5 @@
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 import Database.Database;
 import Superhero.Superhero;
 
@@ -12,6 +11,7 @@ public class UserInterface {
         this.database = database;
         this.scanner = scanner;
     }
+
 
     public void start() {
         System.out.println("Welcome to the Superhero Database!");
@@ -34,6 +34,9 @@ public class UserInterface {
                     case 4:
                         listSuperheroes();
                         break;
+                    case 5:
+                        saveSuperheroes();
+                        break;
                     default:
                         System.out.println("Invalid choice. Please select a valid option.");
                 }
@@ -50,6 +53,7 @@ public class UserInterface {
         System.out.println("2) Exit");
         System.out.println("3) Search for a superhero");
         System.out.println("4) List of Heroes");
+        System.out.println("5) Save superheroes");
         System.out.print("Please select an option: ");
     }
 
@@ -80,14 +84,18 @@ public class UserInterface {
         System.out.println("Superhero added to the database.");
 
         // Save superheroes to the text file after adding a superhero
-        database.saveSuperheroesToFile("superheroes.txt");
+        database.saveSuperheroesToFile();
+        System.out.println("Superheroes saved to 'superheroes.txt'.");
     }
+
 
     private void exitAndSave() {
         System.out.println("Exiting the Superhero Database.");
         // Save superheroes to the text file before exiting
-        database.saveSuperheroesToFile("superheroes.txt");
+        database.saveSuperheroesToFile();
+        System.out.println("Superheroes saved to superheroes.txt.");
     }
+
 
     private void searchSuperhero() {
         System.out.print("Enter a superhero name (full or partial): ");
@@ -99,4 +107,13 @@ public class UserInterface {
     private void listSuperheroes() {
         database.listSuperheroes();
     }
+
+    private void saveSuperheroes() {
+        System.out.print("Enter the filename to save the superheroes: ");
+        scanner.nextLine(); // Consume newline
+        String filename = scanner.nextLine();
+        database.saveSuperheroesToFile();
+        System.out.println("Superheroes saved to '" + filename + "'.");
+    }
+
 }

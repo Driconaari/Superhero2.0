@@ -17,18 +17,16 @@ public class Controller {
     }
 
     public void saveSuperheroesToFile(String filename) {
-        database.saveSuperheroesToFile(filename);
+        database.saveSuperheroesToFile();
     }
 
     public void loadSuperheroesFromFile(String filename) {
-        database.loadSuperheroesFromFile(filename);
+        database.loadSuperheroesFromFile();
     }
 
     public void searchSuperhero(String searchTerm) {
         database.searchAndDisplaySuperheroes(searchTerm);
     }
-
-    public void listSuperheroes() {
-        database.listSuperheroes();
-    }
 }
+
+

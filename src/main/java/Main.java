@@ -4,7 +4,8 @@ import Database.Database;
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Database database = new Database();
+        String filename = "superheroes.txt"; // Provide the desired filename
+        Database database = new Database(filename);
         UserInterface ui = new UserInterface(database, scanner);
         ui.start();
     }

@@ -1,6 +1,9 @@
 package Superhero;
 
 import java.io.Serializable;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class Superhero implements Serializable {
     private String name;
@@ -15,6 +18,11 @@ public class Superhero implements Serializable {
         this.isHuman = isHuman;
         this.creationYear = creationYear;
         this.strength = strength;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + name + ", Real Name: " + realName + ", Human: " + isHuman + ", Year: " + creationYear + ", Strength: " + strength;
     }
 
     public String getName() {
@@ -35,5 +43,13 @@ public class Superhero implements Serializable {
 
     public String getStrength() {
         return strength;
+    }
+
+    private void writeObject(ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject(); // Use the default serialization for other fields
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        in.defaultReadObject(); // Use the default deserialization for other fields
     }
 }
